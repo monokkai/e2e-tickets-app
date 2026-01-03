@@ -1,8 +1,25 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+
+  const config = app.get(ConfigService);
+  const logger = new Logger();
+
+  app.enableCors({
+    origin: config.getOrThrow<string>("HTTP_CORS").split(','),
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+
+  const port = config.getOrThrow<number>("HTTP_PORT");
+  const host = config.getOrThrow<string>("HTTP_HOST");
+
+  await app.listen(port);
+  logger.log(`🚀 Gateway Service is running at ${host}:${port}`);
+  logger.log(`🚀 Swagger Docs available at ${host}:${port}/docs`);
 }
 bootstrap();

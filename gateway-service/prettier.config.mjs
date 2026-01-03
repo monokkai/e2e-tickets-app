@@ -1,4 +1,3 @@
-{
-  "singleQuote": true,
-  "trailingComma": "all"
-}
+import config from "@monocinema/core/prettier";
+
+export default config;
