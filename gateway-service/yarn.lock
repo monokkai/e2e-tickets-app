@@ -872,10 +872,10 @@
   resolved "https://registry.yarnpkg.com/@lukeed/csprng/-/csprng-1.1.0.tgz#1e3e4bd05c1cc7a0b2ddbd8a03f39f6e4b5e6cfe"
   integrity sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==
 
-"@monocinema/core@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@monocinema/core/-/core-1.0.2.tgz#29ea04268fc8d0a2208012c7b48f080807c9ae1f"
-  integrity sha512-rZtQ+jfL7diNilZo+umwW+fbP6txPmEDLZsP1q6zGrlCmEcHH4OOQFg2oLqA2AHdQMAtuzGbYoRRZN30xI/rmg==
+"@monocinema/core@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@monocinema/core/-/core-1.0.3.tgz#b22071284c7692c3e9349c2f1bab467d34c7e63a"
+  integrity sha512-e5TWJtsF5jAVWsQThE9zIkzzj1AE023ltoAjvm6A2b1DxYA2GQipFux7sIQOfVN+p2XiLDGLaPNeO2x3J3hFQA==
   dependencies:
     "@trivago/prettier-plugin-sort-imports" "^5.2.2"
 

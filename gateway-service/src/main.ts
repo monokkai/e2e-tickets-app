@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './core/app.module';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -19,7 +19,7 @@ async function bootstrap() {
   const host = config.getOrThrow<string>("HTTP_HOST");
 
   await app.listen(port);
-  logger.log(`🚀 Gateway Service is running at ${host}:${port}`);
-  logger.log(`🚀 Swagger Docs available at ${host}:${port}/docs`);
+  logger.log(`🚀 Gateway Service is running at ${host}`);
+  logger.log(`🚀 Swagger Docs available at ${host}/docs`);
 }
 bootstrap();
