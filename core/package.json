@@ -1,7 +1,7 @@
 {
   "name": "@monocinema/core",
   "version": "1.0.1",
-  "description": "Core utilities and shared setup.",
+  "description": "Core utilities and shared setup",
   "type": "module",
   "publishConfig": {
     "access": "public"
