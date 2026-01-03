@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './core/app.module';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,18 @@ async function bootstrap() {
     origin: config.getOrThrow<string>("HTTP_CORS").split(','),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+  });
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Gateway Service API')
+    .setDescription('API Gateway for Microservices')
+    .setVersion('1.0.0')
+    .addBearerAuth()
+    .build();
+
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('/docs', app, swaggerDocument, {
+    yamlDocumentUrl: '/openapi.yaml',
   });
 
   const port = config.getOrThrow<number>("HTTP_PORT");
