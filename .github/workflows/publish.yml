@@ -14,9 +14,7 @@ jobs:
         with:
           node-version: 20
           registry-url: "https://registry.npmjs.org/"
-      - run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-          npm publish
+      - run: npm publish
         working-directory: ./core
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
