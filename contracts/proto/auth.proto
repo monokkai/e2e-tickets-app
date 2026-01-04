@@ -6,7 +6,6 @@ import "google/protobuf/empty.proto";
 
 service AuthService {
     rpc SendOtp (SendOtpRequest) returns (SendOtpResponse);
-
     rpc Ping (google.protobuf.Empty) returns (SendOtpRequest);
 }
 
