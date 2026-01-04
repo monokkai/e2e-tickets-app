@@ -1,0 +1,34 @@
+name: Publish Contracts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "contracts/**"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./contracts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install deps
+        run: yarn install --frozen-lockfile
+
+      - name: Generate TS protobuf
+        run: yarn run generate
+
+      - name: Publish package
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
