@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './core/app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { getCorsConfig, getValidationPipeConfig } from './core/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,11 +11,9 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const logger = new Logger();
 
-  app.enableCors({
-    origin: config.getOrThrow<string>("HTTP_CORS").split(','),
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-  });
+  app.useGlobalPipes(new ValidationPipe(getValidationPipeConfig()));
+
+  app.enableCors(getCorsConfig(config));
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Gateway Service API')
