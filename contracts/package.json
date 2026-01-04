@@ -1,12 +1,12 @@
 {
   "name": "@monocinema/contracts",
   "version": "1.0.0",
-  "description": "Protobuf defenitions for TypeScript files",
+  "description": "Protobuf definitions for TypeScript files",
   "main": "index.js",
   "scripts": {
     "generate": "protoc -I ./proto ./proto/*.proto --ts_proto_out=./gen --ts_proto_opt=nestJs=true,package=omit"
   },
-  "fies": [
+  "files": [
     "proto",
     "gen"
   ],
@@ -16,5 +16,9 @@
   "dependencies": {
     "@nestjs/microservices": "^11.1.11",
     "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "protoc": "^33.2.0",
+    "ts-proto": "^2.10.1"
   }
 }
