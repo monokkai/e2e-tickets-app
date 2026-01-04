@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "core/**"
+      - ".github/workflows/publish-core.yml"
 
 jobs:
   publish:

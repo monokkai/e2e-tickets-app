@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "contracts/**"
+      - ".github/workflows/publish-contracts.yml"
 
 jobs:
   publish:
