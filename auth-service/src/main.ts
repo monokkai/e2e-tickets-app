@@ -13,9 +13,16 @@ async function bootstrap() {
       url: "localhost:50051",
       loader: {
         keepCase: false,
-        
+        longs: String,
+        enums: String,
+        defaults: true,
+        oneofs: true,
       }
     },
   })
+
+  await app.startAllMicroservices();
+  await app.init();
 }
+
 bootstrap();

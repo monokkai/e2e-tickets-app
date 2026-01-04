@@ -1,0 +1,16 @@
+import type { SendOtpRequest, SendOtpResponse } from '@monocinema/contracts/gen/auth';
+import { Controller } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { GrpcMethod } from '@nestjs/microservices';
+
+@Controller()
+export class AuthController {
+  public constructor(private readonly authService: AuthService) { }
+
+  @GrpcMethod("AuthService", "SendOtp")
+  public async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
+    console.log('AuthController.sendOtp called with data: ', data);
+
+    return { ok: true }
+  }
+}
