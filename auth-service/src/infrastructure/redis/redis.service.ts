@@ -13,37 +13,46 @@ export class RedisService extends Redis implements OnModuleInit, OnModuleDestroy
             host: configService.getOrThrow<string>("REDIS_HOST"),
             port: configService.getOrThrow<number>("REDIS_PORT"),
             maxRetriesPerRequest: 5,
-            enableOfflineQueue: true
+            enableOfflineQueue: true,
+            lazyConnect: true
         })
     }
 
     public async onModuleInit() {
         const start = Date.now();
 
+        await this.connect();
+
         this.logger.log("Connecting to Redis...")
 
-        this.on("connect", () => {
-            this.logger.log("Redis connecting...")
-        })
-
-        this.on("ready", () => {
-            const ms = Date.now() - start;
-            this.logger.log(`Redis connected in ${ms} ms`)
-        })
-
-        this.on("error", (err) => {
-            this.logger.error(`Redis error:`, {
-                error: err.message ?? err
+        try {
+            await this.connect();
+            this.on("connect", () => {
+                this.logger.log("Redis connecting...")
             })
-        })
 
-        this.on("close", () => {
-            this.logger.log("Redis connection closed")
-        })
+            this.on("ready", () => {
+                const ms = Date.now() - start;
+                this.logger.log(`Redis connected in ${ms} ms`)
+            })
 
-        this.on("reconnecting", () => {
-            this.logger.log("Redis reconnecting...")
-        })
+            this.on("error", (err) => {
+                this.logger.error(`Redis error:`, {
+                    error: err.message ?? err
+                })
+            })
+
+            this.on("close", () => {
+                this.logger.log("Redis connection closed")
+            })
+
+            this.on("reconnecting", () => {
+                this.logger.log("Redis reconnecting...")
+            })
+        } catch (error) {
+            this.logger.error(`Failed to connect to Redis: ${error.message}`);
+            return;
+        }
     }
 
     public async onModuleDestroy() {
